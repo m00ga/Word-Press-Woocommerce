@@ -81,13 +81,8 @@ function woocommerce_wayforpay_init()
 
             $this->serviceUrl = $this->settings['returnUrl'];
 
-            $filterMerchantData = apply_filters('filter_woocommerce_wayforpay_get_merchant');
-            if (!empty($filterMerchantData) && is_array($filterMerchantData)) {
-                list($this->merchant_id, $this->secretKey) = $filterMerchantData;
-            } else {
-                $this->merchant_id = $this->settings['merchant_account'];
-                $this->secretKey = $this->settings['secret_key'];
-            }
+            $this->merchant_id = $this->settings['merchant_account'];
+            $this->secretKey = $this->settings['secret_key'];
 
             $this->description = $this->settings['description'];
 
@@ -482,6 +477,11 @@ function woocommerce_wayforpay_init()
             $order = new WC_Order($orderId);
             if ($order === FALSE) {
                 return __('An error has occurred during payment. Please contact us to ensure your order has submitted.', 'woocommerce-wayforpay-payments');
+            }
+
+            $filterMerchantData = apply_filters('filter_woocommerce_wayforpay_get_merchant', $orderId);
+            if (!empty($filterMerchantData) && is_array($filterMerchantData)) {
+                list($this->merchant_id, $this->secretKey) = $filterMerchantData;
             }
 
             if ($this->merchant_id != $response['merchantAccount']) {
