@@ -81,9 +81,9 @@ function woocommerce_wayforpay_init()
 
             $this->serviceUrl = $this->settings['returnUrl'];
 
-            $hookMerchantData = do_action('woocommerce_wayforpay_get_merchant');
-            if (!empty($hookMerchantData) && is_array($hookMerchantData)) {
-                list($this->merchant_id, $this->secretKey) = $hookMerchantData;
+            $filterMerchantData = apply_filters('filter_woocommerce_wayforpay_get_merchant');
+            if (!empty($filterMerchantData) && is_array($filterMerchantData)) {
+                list($this->merchant_id, $this->secretKey) = $filterMerchantData;
             } else {
                 $this->merchant_id = $this->settings['merchant_account'];
                 $this->secretKey = $this->settings['secret_key'];
