@@ -452,10 +452,9 @@ function woocommerce_wayforpay_init()
             $redirect_url = ($this->redirect_page_id == "" || $this->redirect_page_id == 0) ? get_site_url() . "/" : get_permalink($this->redirect_page_id);
             if (!$service) {
                 if (
-                    isset($this->settings['returnUrl_m']) &&
-                    trim($this->settings['returnUrl_m']) !== ''
+                    isset($this->settings['returnUrl_m'])
                 ) {
-                    return trim($this->settings['returnUrl_m']);
+                    return $this->settings['returnUrl_m'];
                 }
                 return $redirect_url;
             }
